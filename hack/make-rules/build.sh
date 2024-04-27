@@ -21,7 +21,8 @@ set -o nounset
 set -o pipefail
 
 KUBE_ROOT=$(dirname "${BASH_SOURCE[0]}")/../..
-KUBE_VERBOSE="${KUBE_VERBOSE:-1}"
+KUBE_VERBOSE="${KUBE_VERBOSE:-5}"
+# 这里调用了同级 lib 文件夹中的 init.sh 脚本
 source "${KUBE_ROOT}/hack/lib/init.sh"
 
 kube::golang::build_binaries "$@"

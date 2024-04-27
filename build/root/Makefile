@@ -548,6 +548,7 @@ generated_files:
 	@echo "$$GENERATED_FILES_HELP_INFO"
 else
 generated_files gen_openapi:
+	echo "now will generated files and openapi"
 	$(MAKE) -f Makefile.generated_files $@ CALLED_FROM_MAIN_MAKEFILE=1
 endif
 

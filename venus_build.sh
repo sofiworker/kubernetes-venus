@@ -10,3 +10,5 @@ make all WHAT=cmd/kubectl GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
 make all WHAT=cmd/kubectl-convert GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
 make all WHAT=cmd/kubelet GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
 make all WHAT=cmd/kubemark GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
+
+make clean_generated

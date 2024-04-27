@@ -27,6 +27,7 @@ readonly KUBE_SUPPORTED_SERVER_PLATFORMS=(
   linux/arm64
   linux/s390x
   linux/ppc64le
+  linux/loongarch64
 )
 
 # The node platforms we build for
@@ -37,6 +38,7 @@ readonly KUBE_SUPPORTED_NODE_PLATFORMS=(
   linux/s390x
   linux/ppc64le
   windows/amd64
+  linux/loongarch64
 )
 
 # If we update this we should also update the set of platforms whose standard
@@ -52,6 +54,7 @@ readonly KUBE_SUPPORTED_CLIENT_PLATFORMS=(
   darwin/arm64
   windows/amd64
   windows/386
+  linux/loongarch64
 )
 
 # Which platforms we should compile test targets for.
@@ -65,6 +68,7 @@ readonly KUBE_SUPPORTED_TEST_PLATFORMS=(
   darwin/amd64
   darwin/arm64
   windows/amd64
+  linux/loongarch64
 )
 
 # The set of server targets that we are only building for Linux
@@ -428,6 +432,10 @@ kube::golang::set_platform_envs() {
         export CGO_ENABLED=1
         export CC=${KUBE_LINUX_S390X_CC:-s390x-linux-gnu-gcc}
         ;;
+      "linux/loongarch64")
+        export CGO_ENABLED=1
+        export CC=${KUBE_LINUX_LOONGARCH64_CC:-loongarch64-linux-gnu-gcc}
+        ;;
     esac
   fi
 
@@ -788,6 +796,7 @@ kube::golang::build_binaries() {
 
     local host_platform
     host_platform=$(kube::golang::host_platform)
+    echo "venus: the host platform is ${host_platform}"
 
     local goflags goldflags goasmflags gogcflags gotags
     # If GOLDFLAGS is unset, then set it to the a default of "-s -w".
@@ -823,6 +832,7 @@ kube::golang::build_binaries() {
     if [[ ${#platforms[@]} -eq 0 ]]; then
       platforms=("${host_platform}")
     fi
+    echo "venus: mutil archs build, the platforms is ${platforms[@]}"
 
     local -a binaries
     while IFS="" read -r binary; do binaries+=("$binary"); done < <(kube::golang::binaries_from_targets "${targets[@]}")
