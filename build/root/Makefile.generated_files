@@ -67,6 +67,7 @@ $(META_DIR)/$(GO_PKGDEPS_FILE): FORCE
 	if [[ "$(DBG_CODEGEN)" == 1 ]]; then          \
 	    echo "DBG: calculating Go dependencies";  \
 	fi
+	@echo "venus: install hack/make-rules/helpers/go2make file"
 	hack/run-in-gopath.sh go install ./hack/make-rules/helpers/go2make
 	hack/run-in-gopath.sh go2make                       \
 	    k8s.io/kubernetes/...                           \
@@ -81,6 +82,8 @@ $(META_DIR)/$(GO_PKGDEPS_FILE): FORCE
 	    fi;                                             \
 	    cat $@.tmp > $@;                                \
 	fi
+	#@echo "venus: go2make exec the cmd:\n"
+	#@cat $@.tmp
 	rm -f $@.tmp
 
 .PHONY: FORCE
@@ -157,6 +160,8 @@ $(shell rm -f $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo)
 # in a single run of the tool.
 .PHONY: gen_prerelease_lifecycle
 gen_prerelease_lifecycle: $(PRERELEASE_LIFECYCLE_GEN) $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo
+	# @echo "venus: gen_prerelease_lifecycle  $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo"
+	# @cat $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo
 	if [[ -s $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo ]]; then                 \
 	    pkgs=$$(cat $(META_DIR)/$(PRERELEASE_LIFECYCLE_GEN).todo | paste -sd, -);  \
 	    if [[ "$(DBG_CODEGEN)" == 1 ]]; then                                       \

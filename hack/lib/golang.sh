@@ -684,6 +684,7 @@ kube::golang::build_some_binaries() {
      fi
    else
     V=2 kube::log::info "Coverage is disabled."
+    echo "venus: go install \"${build_args[@]}\" \"$@\""
     go install "${build_args[@]}" "$@"
    fi
 }
@@ -701,6 +702,7 @@ kube::golang::build_binaries_for_platform() {
   V=2 kube::log::info "Env for ${platform}: GOOS=${GOOS-} GOARCH=${GOARCH-} GOROOT=${GOROOT-} CGO_ENABLED=${CGO_ENABLED-} CC=${CC-}"
 
   for binary in "${binaries[@]}"; do
+    echo "venus: build binary [ ${binary} ]"
     if [[ "${binary}" =~ ".test"$ ]]; then
       tests+=("${binary}")
     elif kube::golang::is_statically_linked_library "${binary}"; then

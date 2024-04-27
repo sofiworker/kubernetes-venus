@@ -31,4 +31,18 @@ source "${KUBE_ROOT}/hack/lib/init.sh"
 kube::golang::setup_env
 
 # Run the user-provided command.
+echo "venus: file [run-in-gopath.sh] run the cmd is [ ${@} ]"
+cmd=${@:1:1}
+fullName=${KUBE_ROOT}/${cmd}
+
+prefix="_output/bin/"
+if [[ "$cmd" == "$prefix"* ]]; then
+    if [ -e "$fullName" ]; then
+        if [ ! -x "${fullName}" ]; then
+            echo "venus: add exec for [ ${fullName} ]"
+            chmod +x ${fullName}
+        fi
+    fi
+fi
+
 "${@}"
