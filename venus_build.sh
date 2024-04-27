@@ -11,12 +11,16 @@
 # make all WHAT=cmd/kubelet GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
 # make all WHAT=cmd/kubemark GOFLAGS=-v GOLDFLAGS='-extldflags "-static"'
 
+make clean
+make clean_generated
+
+# mkdir -p _output/bin/
+# mkdir -p .make/_output/bin/
+
 command=$@
 
 case $command in
     "build")
-        make clean
-        make clean_generated
         make all
         ;;
     "clean")
@@ -24,8 +28,6 @@ case $command in
         make clean_generated
         ;;
     "kubelet")
-        make clean
-        make clean_generated
         make all WHAT=cmd/kubelet
         ;;
     *)
