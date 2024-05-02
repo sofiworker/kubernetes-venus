@@ -23,6 +23,13 @@ case $command in
     "build")
         make all
         ;;
+    "build-static")
+        make all GOLDFLAGS='-extldflags "-static"'
+        ;;
+    "images")
+        make all
+        make release-images
+        ;;
     "clean")
         make clean
         make clean_generated
